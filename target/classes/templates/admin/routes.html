@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Управление маршрутами</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin_style.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="container">
+        <a href="/admin/vehicles" class="navbar-brand">Панель администратора</a>
+        <div class="nav-links">
+            <a href="/admin/vehicles" class="nav-link">Машины</a>
+            <a href="/admin/drivers" class="nav-link">Водители</a>
+            <a href="/admin/routes" class="nav-link active">Маршруты</a>
+            <a href="/admin/schedules" class="nav-link">Расписание</a>
+            <a href="/admin/stops" class="nav-link">Остановки</a>
+            <a href="/admin/dashboard" class="nav-link">Дашборд</a>
+            <a href="/admin/dispatch" class="nav-link">Выезд</a>
+            <a href="/admin/users" class="nav-link">Пользователи</a>
+            <a href="/admin/logs" class="nav-link">Логи</a>
+            <a href="/login" class="btn-logout">Выход</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-5">
+            <input type="text" id="searchInput" class="form-control" placeholder="Поиск по номеру или названию..." oninput="filterRoutes()">
+        </div>
+        <div class="col-md-3">
+            <select id="typeFilter" class="form-select" onchange="filterRoutes()">
+                <option value="all">Все типы</option>
+                <option value="bus">bus</option>
+                <option value="tram">tram</option>
+                <option value="minibus">minibus</option>
+                <option value="trolleybus">trolleybus</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#editModal" onclick="openAddRoute()">
+                Добавить маршрут
+            </button>
+        </div>
+    </div>
+
+    <div id="tablesContainer"></div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Добавить маршрут</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId">
+                <div class="mb-3">
+                    <label>Номер</label>
+                    <input type="text" id="number" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Название</label>
+                    <input type="text" id="name" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Тип транспорта</label>
+                    <select id="transportTypeId" class="form-select">
+                        <option value="1">bus</option>
+                        <option value="3">tram</option>
+                        <option value="5">minibus</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary" onclick="saveRoute()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsTitle">Детали маршрута</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Номер:</strong> <span id="detNumber"></span></p>
+                <p><strong>Название:</strong> <span id="detName"></span></p>
+                <p><strong>Длина:</strong> <span id="detLength"></span> км</p>
+                <p><strong>Время:</strong> <span id="detDuration"></span> мин</p>
+                <p><strong>Тип транспорта:</strong> <span id="detType"></span></p>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">Остановки на маршруте</h5>
+                    <button class="btn btn-success btn-sm" onclick="showAddStopToRoute()">+ Добавить остановку</button>
+                </div>
+                <table class="table">
+                    <thead><tr><th>№</th><th>Остановка</th><th>Расстояние до след. (км)</th><th>Время до след. (мин)</th><th></th></tr></thead>
+                    <tbody id="detStops"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addStopModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleAddStop">Добавить остановку на маршрут</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="addStopRouteId">
+                <div class="mb-3">
+                    <label>Остановка</label>
+                    <select id="addStopId" class="form-select"></select>
+                </div>
+                <div class="mb-3">
+                    <label>Порядковый номер</label>
+                    <input type="number" id="addStopOrderNum" class="form-control" value="1" min="1">
+                </div>
+                <div class="mb-3">
+                    <label>Расстояние до следующей (км)</label>
+                    <input type="number" step="0.1" id="addStopDistance" class="form-control" min="0">
+                </div>
+                <div class="mb-3">
+                    <label>Время до следующей (мин)</label>
+                    <input type="number" id="addStopTime" class="form-control" min="0">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary" id="addStopBtn" onclick="addStopToRoute()">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    Транспортная система &copy; 2026 &nbsp;|&nbsp; Панель администратора &nbsp;|&nbsp; Версия 1.0 |&nbsp; Разработчик: компания "JujutsuKaisen"
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/admin.js"></script>
+<script src="/js/admin_routes.js"></script>
+</body>
+</html>

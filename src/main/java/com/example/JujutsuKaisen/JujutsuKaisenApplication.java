@@ -1,0 +1,13 @@
+package com.example.JujutsuKaisen;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class JujutsuKaisenApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(JujutsuKaisenApplication.class, args);
+    }
+
+}

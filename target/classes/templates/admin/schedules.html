@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Шаблоны расписания</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin_style.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="container">
+        <a href="/admin/vehicles" class="navbar-brand">Панель администратора</a>
+        <div class="nav-links">
+            <a href="/admin/vehicles" class="nav-link">Машины</a>
+            <a href="/admin/drivers" class="nav-link">Водители</a>
+            <a href="/admin/routes" class="nav-link">Маршруты</a>
+            <a href="/admin/schedules" class="nav-link active">Расписание</a>
+            <a href="/admin/stops" class="nav-link">Остановки</a>
+            <a href="/admin/dashboard" class="nav-link">Дашборд</a>
+            <a href="/admin/dispatch" class="nav-link">Выезд</a>
+            <a href="/admin/users" class="nav-link">Пользователи</a>
+            <a href="/admin/logs" class="nav-link">Логи</a>
+            <a href="/login" class="btn-logout">Выход</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Шаблоны расписания</h3>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal" onclick="openAdd()">
+            Добавить шаблон
+        </button>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr><th>№</th><th>Маршрут</th><th>День</th><th>Отправление</th><th>Прибытие (план)</th><th>Действия</th></tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Добавить шаблон</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId">
+                <div class="mb-3">
+                    <label>Маршрут</label>
+                    <select id="routeId" class="form-select"></select>
+                </div>
+                <div class="mb-3">
+                    <label>День недели</label>
+                    <select id="dayOfWeek" class="form-select">
+                        <option value="1">ПН</option><option value="2">ВТ</option><option value="3">СР</option>
+                        <option value="4">ЧТ</option><option value="5">ПТ</option><option value="6">СБ</option><option value="7">ВС</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label>Время отправления</label>
+                    <input type="time" id="departureTime" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary" onclick="save()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    Транспортная система &copy; 2026 &nbsp;|&nbsp; Панель администратора &nbsp;|&nbsp; Версия 1.0 |&nbsp; Разработчик: компания "JujutsuKaisen"
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/admin.js"></script>
+<script src="/js/admin_schedules.js"></script>
+</body>
+</html>

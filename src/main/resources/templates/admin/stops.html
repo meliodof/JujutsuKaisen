@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Управление остановками</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin_style.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="container">
+        <a href="/admin/vehicles" class="navbar-brand">Панель администратора</a>
+        <div class="nav-links">
+            <a href="/admin/vehicles" class="nav-link">Машины</a>
+            <a href="/admin/drivers" class="nav-link">Водители</a>
+            <a href="/admin/routes" class="nav-link">Маршруты</a>
+            <a href="/admin/schedules" class="nav-link">Расписание</a>
+            <a href="/admin/stops" class="nav-link active">Остановки</a>
+            <a href="/admin/dashboard" class="nav-link">Дашборд</a>
+            <a href="/admin/dispatch" class="nav-link">Выезд</a>
+            <a href="/admin/users" class="nav-link">Пользователи</a>
+            <a href="/admin/logs" class="nav-link">Логи</a>
+            <a href="/login" class="btn-logout">Выход</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <input type="text" id="searchInput" class="form-control" placeholder="Поиск по названию..." oninput="filterStops()">
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#editModal" onclick="openAddStop()">
+                Добавить остановку
+            </button>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr><th>№</th><th>Название</th><th>Широта</th><th>Долгота</th><th>Тип</th><th>Действия</th></tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Добавить остановку</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId">
+                <div class="mb-3">
+                    <label>Название</label>
+                    <input type="text" id="name" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Широта</label>
+                    <input type="number" step="any" id="latitude" class="form-control" value="55.0">
+                </div>
+                <div class="mb-3">
+                    <label>Долгота</label>
+                    <input type="number" step="any" id="longitude" class="form-control" value="37.0">
+                </div>
+                <div class="mb-3">
+                    <label>Тип</label>
+                    <select id="stopType" class="form-select">
+                        <option value="intermediate">intermediate</option>
+                        <option value="initial">initial</option>
+                        <option value="final">final</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary" onclick="saveStop()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    Транспортная система &copy; 2026 &nbsp;|&nbsp; Панель администратора &nbsp;|&nbsp; Версия 1.0 |&nbsp; Разработчик: компания "JujutsuKaisen"
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/admin.js"></script>
+<script src="/js/admin_stops.js"></script>
+</body>
+</html>

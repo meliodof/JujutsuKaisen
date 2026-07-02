@@ -1,0 +1,2 @@
+-- Опционально: последний пробег прямо в таблице vehicle (приложение работает и без этого)
+-- ALTER TABLE vehicle ADD COLUMN IF NOT EXISTS current_mileage integer DEFAULT 0;

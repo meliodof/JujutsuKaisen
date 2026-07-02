@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Осмотр машин</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin_style.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="container">
+        <span class="navbar-brand">Кабинет механика</span>
+        <div class="nav-links">
+            <a href="/login" class="btn-logout">Выход</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Осмотр машины</h3>
+            <div class="card p-4">
+                <h3>🔧 Осмотр машины</h3>
+                <select id="inspVehicle" class="form-select mb-3" onchange="loadLastMileage('insp')"></select>
+                <select id="inspDriver" class="form-select mb-3"></select>
+                <select id="inspType" class="form-select mb-3">
+                    <option value="pre_trip">Предрейсовый</option>
+                    <option value="post_trip">Послерейсовый</option>
+                </select>
+                <select id="inspResult" class="form-select mb-3">
+                    <option value="passed">Исправна</option>
+                    <option value="failed">Неисправна</option>
+                </select>
+                <div class="alert alert-secondary py-2" id="lastMileageHint">Последний пробег: —</div>
+                <input type="number" id="mileage" class="form-control mb-3" placeholder="Пробег (км)">
+                <input type="text" id="inspNotes" class="form-control mb-3" placeholder="Примечания">
+                <button class="btn btn-success w-100" onclick="submitInspection()">Сохранить осмотр</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>Заправка</h3>
+            <div class="card p-4">
+                <select id="fuelVehicle" class="form-select mb-3" onchange="loadLastMileage('fuel')"></select>
+                <select id="fuelDriver" class="form-select mb-3"></select>
+                <select id="fuelPhase" class="form-select mb-3">
+                    <option value="pre_trip">До выезда</option>
+                    <option value="post_trip">После рейса</option>
+                </select>
+                <div class="alert alert-secondary py-2" id="fuelMileageHint">Последний пробег: —</div>
+                <input type="number" id="fuelLiters" class="form-control mb-3" placeholder="Литры" step="0.1">
+                <input type="number" id="fuelMileage" class="form-control mb-3" placeholder="Пробег на одометре (км)">
+                <button class="btn btn-success w-100" onclick="submitFuel()">Сохранить заправку</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">Транспортная система &copy; 2026</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/mechanic/mechanic.js"></script>
+</body>
+</html>

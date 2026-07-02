@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Управление пользователями</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin_style.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="container">
+        <a href="/admin/vehicles" class="navbar-brand">Панель администратора</a>
+        <div class="nav-links">
+            <a href="/admin/vehicles" class="nav-link">Машины</a>
+            <a href="/admin/drivers" class="nav-link ">Водители</a>
+            <a href="/admin/routes" class="nav-link">Маршруты</a>
+            <a href="/admin/schedules" class="nav-link">Расписание</a>
+            <a href="/admin/stops" class="nav-link">Остановки</a>
+            <a href="/admin/dashboard" class="nav-link">Дашборд</a>
+            <a href="/admin/dispatch" class="nav-link">Выезд</a>
+            <a href="/admin/users" class="nav-link active">Пользователи</a>
+            <a href="/admin/logs" class="nav-link">Логи</a>
+            <a href="/login" class="btn-logout">Выход</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="text" id="searchInput" class="form-control" placeholder="Поиск по логину..." oninput="filterUsers()">
+        </div>
+        <div class="col-md-3">
+            <select id="roleFilter" class="form-select" onchange="filterUsers()">
+                <option value="all">Все роли</option>
+                <option value="ADMIN">Администраторы</option>
+                <option value="DRIVER">Водители</option>
+                <option value="DISPATCHER">Диспетчеры</option>
+                <option value="MEDIC">Медики</option>
+                <option value="MECHANIC">Механики</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#editModal" onclick="openAddUser()">
+                Добавить пользователя
+            </button>
+        </div>
+    </div>
+
+    <div id="tablesContainer"></div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Добавить пользователя</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId">
+                <div class="mb-3">
+                    <label>Логин</label>
+                    <input type="text" id="username" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Пароль</label>
+                    <input type="password" id="password" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Роль</label>
+                    <select id="roleId" class="form-select">
+                        <option value="1">DRIVER</option>
+                        <option value="2">DISPATCHER</option>
+                        <option value="3">ADMIN</option>
+                        <option value="4">MEDIC</option>
+                        <option value="5">MECHANIC</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label>Привязать к водителю</label>
+                    <select id="driverId" class="form-select">
+                        <option value="">Без привязки</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary" onclick="saveUser()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    Транспортная система &copy; 2026 &nbsp;|&nbsp; Панель администратора &nbsp;|&nbsp; Версия 1.0 |&nbsp; Разработчик: компания "JujutsuKaisen"
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/admin.js"></script>
+<script src="/js/admin_users.js"></script>
+</body>
+</html>

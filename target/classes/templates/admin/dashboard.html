@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Дашборд</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/css/admin_style.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="container">
+        <a href="/admin/vehicles" class="navbar-brand">Панель администратора</a>
+        <div class="nav-links">
+            <a href="/admin/vehicles" class="nav-link">Машины</a>
+            <a href="/admin/drivers" class="nav-link">Водители</a>
+            <a href="/admin/routes" class="nav-link">Маршруты</a>
+            <a href="/admin/schedules" class="nav-link">Расписание</a>
+            <a href="/admin/stops" class="nav-link">Остановки</a>
+            <a href="/admin/dashboard" class="nav-link active">Дашборд</a>
+            <a href="/admin/dispatch" class="nav-link">Выезд</a>
+            <a href="/admin/users" class="nav-link">Пользователи</a>
+            <a href="/admin/logs" class="nav-link">Логи</a>
+            <a href="/login" class="btn-logout">Выход</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-3"><div class="card p-3 text-center"><h4 id="totalVehicles">0</h4><small>Машин</small></div></div>
+        <div class="col-md-3"><div class="card p-3 text-center"><h4 id="totalDrivers">0</h4><small>Водителей</small></div></div>
+        <div class="col-md-3"><div class="card p-3 text-center"><h4 id="totalRoutes">0</h4><small>Маршрутов</small></div></div>
+        <div class="col-md-3"><div class="card p-3 text-center"><h4 id="todayTrips">0</h4><small>Рейсов сегодня</small></div></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3"><div class="card p-3"><h5>Рейсы за 7 дней</h5><canvas id="tripsChart"></canvas></div></div>
+        <div class="col-md-6 mb-3"><div class="card p-3"><h5>Статусы рейсов (сегодня)</h5><canvas id="statusChart"></canvas></div></div>
+    </div>
+</div>
+
+<footer class="footer">Транспортная система &copy; 2026</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/dashboard/dashboard.js"></script>
+</body>
+</html>
